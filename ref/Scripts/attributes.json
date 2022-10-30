@@ -1,0 +1,16 @@
+{
+    "Country": "NL", 
+    "Files": {
+        "Base_path": "../Data/Raw/", 
+        "Weather": "weather/weather.csv",
+        "Corona": "corona/nl_corona.csv", 
+        "Metadata": "metadata/nl_metadata.json", 
+        "Shapefile": "shapefiles/nl.geojson"
+    },
+    "Replacements": {
+        "Noord-Holland": "North Holland",
+        "Noord-Brabant": "North Brabant",
+        "Zuid-Holland": "South Holland"
+    },
+    "Merge": ["date","iso3166-2"]
+}

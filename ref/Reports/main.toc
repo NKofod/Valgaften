@@ -1,0 +1,22 @@
+\babel@toc {english}{}
+\contentsline {section}{\numberline {1}Introduction}{3}{}%
+\contentsline {section}{\numberline {2}Data}{3}{}%
+\contentsline {subsection}{\numberline {2.1}Data Cleaning}{3}{}%
+\contentsline {subsubsection}{\numberline {2.1.1}Initial Cleaning}{3}{}%
+\contentsline {subsubsection}{\numberline {2.1.2}Merging}{4}{}%
+\contentsline {section}{\numberline {3}Results}{4}{}%
+\contentsline {subsection}{\numberline {3.1}Weather data analysis}{4}{}%
+\contentsline {subsection}{\numberline {3.2}Folium maps}{5}{}%
+\contentsline {subsection}{\numberline {3.3}Pearson, spearman, and log-log pearson correlation}{5}{}%
+\contentsline {subsection}{\numberline {3.4}OLS regression results}{6}{}%
+\contentsline {subsection}{\numberline {3.5}OLS regression of dataframe merged with stringency index data}{6}{}%
+\contentsline {section}{\numberline {4}Discussion}{6}{}%
+\contentsline {section}{\numberline {5}Limitations}{7}{}%
+\contentsline {section}{\numberline {6}Concluding Remarks}{7}{}%
+\contentsline {section}{References}{8}{}%
+\contentsline {section}{\numberline {A}Tables}{9}{}%
+\contentsline {subsection}{\numberline {A.1}Weather Data metrics}{9}{}%
+\contentsline {subsection}{\numberline {A.2}Corona Data metrics}{9}{}%
+\contentsline {section}{\numberline {B}Correlations}{10}{}%
+\contentsline {subsection}{\numberline {B.1}Pearson}{10}{}%
+\contentsline {subsection}{\numberline {B.2}Spearman}{10}{}%

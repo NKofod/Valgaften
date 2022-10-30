@@ -1,0 +1,114 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LaTeX Template: Project Titlepage Modified (v 0.1) by rcx
+%
+% Original Source: http://www.howtotex.com
+% Date: February 2014
+% 
+% This is a title page template which be used for articles & reports.
+% 
+% This is the modified version of the original Latex template from
+% aforementioned website.
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+\usepackage[a4paper]{geometry}
+\usepackage[myheadings]{fullpage}
+\usepackage{mathtools}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{graphicx, wrapfig, subcaption, setspace, booktabs}
+\usepackage[T1]{fontenc}
+\usepackage[font=small, labelfont=bf]{caption}
+\usepackage{fourier}
+\usepackage[protrusion=true, expansion=true]{microtype}
+\usepackage[english]{babel}
+\usepackage{sectsty}
+\usepackage{url, lipsum}
+\usepackage{natbib}
+\usepackage{bibentry}
+\usepackage{booktabs}
+\usepackage{pdflscape}
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+% \renewcommand{\contentsname}{"Table of Contents"}
+\addto\captionsenglish{% Replace "english" with the language you use
+  \renewcommand{\contentsname}%
+    {Table of Contents}%
+}
+\onehalfspacing
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{5}
+
+
+%-------------------------------------------------------------------------------
+% HEADER & FOOTER
+%-------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\setlength\headheight{15pt}
+\fancyhead[L]{Group K}
+\fancyhead[R]{IT University of Copenhagen}
+\fancyfoot[R]{Page \thepage\ of \pageref{LastPage}}
+%-------------------------------------------------------------------------------
+% TITLE PAGE
+%-------------------------------------------------------------------------------
+\bibliographystyle{unsrt}
+\begin{document}
+
+% \bibliography{bib.bib}
+\title{ \normalsize \textsc{First Year Project - BSFIYEP1KU}
+		\\ [2.0cm]
+		\HRule{0.5pt} \\
+		\LARGE \textbf{\uppercase{COVID-19 and the Weather}\\
+		\normalsize{\textsc{SUBTITLE}}}
+		\HRule{2pt} \\ [0.5cm]
+		\normalsize \today \vspace*{5\baselineskip}}
+
+\date{}
+
+\author{
+		\textbf{Group K} \\ 
+		Andreas Magnus Benggaard - andbe@itu.dk\\ 
+		Michal Rynowiecki - miry@itu.dk\\ 
+		Nicolai Jacob Kofod-Jensen - nkof@itu.dk\\ 
+		Sam Younes isyo@itu.dk \\ 
+		Sree Keerthi Desu - srde@itu.dk}
+		% \hline
+		% Exam Number: 4\\
+		% Character Count: \\
+		% IT University of Copenhagen \\
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+%-------------------------------------------------------------------------------
+% Section title formatting
+\sectionfont{\scshape}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% BODY
+%-------------------------------------------------------------------------------
+\input{sections/intro.tex}
+\input{sections/data.tex}
+\input{sections/results.tex}
+\input{sections/discussion.tex}
+\input{sections/limitations.tex}
+\input{sections/concluding.tex}
+% \input{sections/disclosure.tex}
+
+
+
+
+%-------------------------------------------------------------------------------
+% REFERENCES
+%-------------------------------------------------------------------------------
+\newpage
+\addcontentsline{toc}{section}{References}
+\bibliography{bib}
+\appendix
+\input{sections/appendices.tex}
+\end{document}
