@@ -10,7 +10,12 @@ import os
 
 
 def get_results(url): 
-    request = requests.get(url)
+    request = ""
+    while request == "":
+        try:
+            request = requests.get(url)
+        except: 
+            pass 
     soup = Soup(request.content,features='lxml')
     parties = soup.findAll('parti')
     results = {}
