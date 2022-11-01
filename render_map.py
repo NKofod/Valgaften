@@ -6,6 +6,7 @@ import time
 import requests 
 from bs4 import BeautifulSoup as Soup 
 import seaborn as sns 
+import os 
 
 
 def get_results(url): 
@@ -123,7 +124,7 @@ while True:
     #ax = sns.catplot(stor_kreds,kind="bar",y="Parties",x="Votes",errorbar=None,label=stor_kreds['Votes'],palette=colors)
     ax.set(title="Sikre mandater")
     
-    ax.figure.savefig(f"./data/charts/chart.{number}.png", format="png")
+    # ax.figure.savefig(f"./data/charts/chart.{number}.png", format="png")
     ax.figure.savefig(f"./data/charts/chart.{number}.svg", format="svg")
 
 
@@ -190,12 +191,17 @@ while True:
     ax.spines['bottom'].set_visible(False)
     ax.spines['left'].set_visible(False)
     ax.margins(x=0)
-    ax.figure.savefig(f"./data/maps/map.{number}.png", format="png")
+    # ax.figure.savefig(f"./data/maps/map.{number}.png", format="png")
     ax.figure.savefig(f"./data/maps/map.{number}.svg", format="svg")
-    
+    if os.path.isfile(f"./data/charts/chart.{number-3}.svg"):
+        os.remove(f"./data/charts/chart.{number-3}.svg")
+    if os.path.isfile(f"./data/maps/map.{number-3}.svg"):
+        os.remove(f"./data/maps/map.{number-3}.svg")
     number += 1 
     sns.reset_defaults()
     end_time = time.time() - zero_time    
     time.sleep(119-(end_time-start_time))
-    start_time = time.time() - zero_time
+    start_time = time.time() - zero_time 
+    
+    
 
