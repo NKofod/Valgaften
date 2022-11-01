@@ -1,0 +1,17 @@
+<html>
+<script>
+var count = 0; 
+window.onload = function() {
+    var image = document.getElementById("img");
+
+    function updateImage() {
+        count++;
+        image.src = image.src.split(".")[0] + "." + count + ".png";
+    }
+    setInterval(updateImage, 120000);
+};
+</script>
+
+<img id="img" src="./data/charts/chart.0.svg" style="position:absolute;top:0;left:0"/>
+</body>
+</html>

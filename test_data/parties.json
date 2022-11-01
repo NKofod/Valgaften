@@ -1,15 +1,41 @@
 {
-	"5891": "Red",
-	"5893": "Red",
-	"5895": "Blue",
-	"1675319": "Blue",
-	"1675339": "Blue",
-	"5897": "Red",
-	"5907": "Blue",
-	"5901": "Blue",
-	"5899": "Blue",
-	"1684467": "Blue",
-	"5903": "Blue",
-	"5905": "Red",
-	"1487618": "Red"
+	"5891": {
+		"Wing": "Red",
+		"Party": "Socialdemokratiet"},
+	"5893": {
+		"Wing": "Red",
+		"Party": "Radikale Venstre"},
+	"5895": {
+		"Wing": "Blue",
+		"Party": "Det Konservative Folkeparti"},
+	"1675319": {
+		"Wing": "Blue",
+		"Party": "Nye Borgerlige"},
+	"1675339": {
+		"Wing": "Blue",
+		"Party": "Klaus Riskjær"},
+	"5897": {
+		"Wing": "Red",
+		"Party": "Socialistisk Folkeparti"},
+	"5907": {
+		"Wing": "Blue",
+		"Party": "Liberal Alliance"},
+	"5901": {
+		"Wing": "Blue",
+		"Party": "Kristendemokraterne"},
+	"5899": {
+		"Wing": "Blue",
+		"Party": "Dansk Folkeparti"},
+	"1684467": {
+		"Wing": "Blue",
+		"Party": "Stram Kurs"},
+	"5903": {
+		"Wing": "Blue",
+		"Party": "Venstre"},
+	"5905": {
+		"Wing": "Red",
+		"Party": "Enhedslisten"},
+	"1487618": {
+		"Wing": "Red",
+		"Party": "Alternativet"}
 }

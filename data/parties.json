@@ -1,16 +1,44 @@
 {
-	"5891":"Red",
-	"5893": "Red",
-	"5895": "Blue", 
-	"1675319": "Blue", 
-	"5897": "Red", 
-	"5907": "Blue",
-	"5901": "Blue",
-	"1962293": "Purple", 
-	"5899": "Blue", 
-	"1962272": "Red", 
-	"5903": "Blue",
-	"1968075": "Blue", 
-	"5905": "Red", 
-	"1487618": "Red" 
+	"5891": {
+ 		"Wing": "Red",
+		"Party": "Socialdemokratiet"},
+	"5893": {
+ 		"Wing": "Red",
+		"Party": "Radikale Venstre"},
+	"5895": {
+ 		"Wing": "Blue",
+		"Party": "Det Konservative Folkeparti"}, 
+	"1675319": {
+ 		"Wing": "Blue",
+		"Party": "Nye Borgelige"}, 
+	"5897": {
+ 		"Wing": "Red",
+		"Party": "Socialistisk Folkeparti"}, 
+	"5907": {
+ 		"Wing": "Blue",
+		"Party": "Liberal Alliance"},
+	"5901": {
+ 		"Wing": "Blue",
+		"Party": "Kristendemokraterne"},
+	"1962293": {
+ 		"Wing": "Purple",
+		"Party": "Moderaterne"}, 
+	"5899": {
+ 		"Wing": "Blue",
+		"Party": "Dansk Folkeparti"}, 
+	"1962272": {
+ 		"Wing": "Red",
+		"Party": "Frie Grønne"}, 
+	"5903": {
+ 		"Wing": "Blue",
+		"Party": "Venstre"},
+	"1968075": {
+ 		"Wing": "Blue",
+		"Party": "Danmarksdemokraterne"}, 
+	"5905": {
+ 		"Wing": "Red",
+		"Party": "Enhedslisten"}, 
+	"1487618": {
+ 		"Wing": "Red",
+		"Party": "Alternativet"}
 }

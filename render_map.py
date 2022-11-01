@@ -1,10 +1,12 @@
 import json 
 import pandas as pd 
 import geopandas as gpd 
-import matplotlib
+import matplotlib.pyplot as plt
 import time
 import requests 
 from bs4 import BeautifulSoup as Soup 
+import seaborn as sns 
+
 
 def get_results(url): 
     request = requests.get(url)
@@ -14,38 +16,26 @@ def get_results(url):
     kreds = soup.find("sted")['id']
     finished = soup.find("status")['kode']
     for parti in parties: 
-        results[parti['id']] = parti['stemmerantal']
+        results[parti['id']] = int(parti['stemmerantal'])
     return results,kreds,finished
 
-
-zero_time = time.time()
-number = 0 
-
-while True: 
-    print(time.time() - zero_time)
-    start_time = time.time()  - zero_time
-    
-
-    with open("./data/xml_urls.json","r") as infile:
-        kredse = json.load(infile)
+def district_vote_quotient(parties,votes,district): 
+    seats = vote_allocation_dict[district]
+    votes_raw = votes
+    quotient = [1] * len(parties)
+    party_seats = [0] * len(parties)
+ 
+    for i in range(int(seats)):
+        winner = votes.index(max(votes))
+        quotient[winner] += 1
+        party_seats[winner] += 1
+        votes[winner] = votes_raw[winner] / quotient[winner]
     results = {}
-    for kreds in kredse:
-        tmp_result, tmp_kreds, finished = get_results(kreds)
-        
-        results[tmp_kreds] = tmp_result
-    with open(f"./data/resultater_{number}.json", "w") as outfile:
-        json.dump(results,outfile,indent=4) 
+    for idx,party in enumerate(parties):
+        results[party] = party_seats[idx]
+    return results 
 
-    with open("./data/parties.json","r") as infile:
-        parties = json.load(infile)
-    # with open(f"./data/resultater.json", "r") as infile:
-    #     results = json.load(infile)
-
-    def rgb_to_hex(rgb):
-        return '%02x%02x%02x' % rgb
-
-
-    def votes_district(results):
+def votes_district(results,parties):
         red = 0 
         blue = 0
         if results == {}: 
@@ -53,22 +43,102 @@ while True:
         for i in results:
             if i == "":
                 continue 
-            if parties[i] == "Red":
+            if parties[i]['Wing'] == "Red":
                 red += int(results[i])
             else:
                 blue += int(results[i])
         total = red + blue 
         return red, blue, total 
 
+zero_time = time.time()
+number = 0 
+vote_allocation_dict = {
+    "10": 15,
+    "11": 11,
+    "12": 10,
+    "13": 2,
+    "14": 21,
+    "15": 12,
+    "16": 18,
+    "17": 17,
+    "18": 14,
+    "19": 15
+}
+stor_kreds_parties = ['5905','1487618','1962272','5897','5893','5891',"Ikke fordelt",'1962293','5903','5895','5907','5901','5899','1675319','1968075']
+
+colors = [(194/255, 27/255, 62/255,1),(0, 1, 0,1),(242/255, 227/255, 208/255,1),(191/255, 4/255, 24/255,1),(212/255, 0/255, 127/255,1),(204/255, 17/255, 48/255,1),(220/255,220/255,220/255,1),(122/255, 40/255, 133/255,1),(0, 83/255, 146/255,1),(0, 62/255, 44/255,1),(255/255, 102/255, 0, 1), (240/255, 81/255, 35/255,1), (231/255, 208/255, 30/255,1),(0, 68/255, 80/255,1),(18/255, 114/255, 194/255,1)]
+
+# stor_kreds_parties = ['5905','1487618','5897','5893','5891',"Ikke fordelt",'5903','5895','5907','5901','5899','1675319']
+
+# colors = [(194/255, 27/255, 62/255,1),(0, 1, 0,1),(191/255, 4/255, 24/255,1),(212/255, 0/255, 127/255,1),(204/255, 17/255, 48/255,1),(220/255,220/255,220/255,1),(0, 83/255, 146/255,1),(0, 62/255, 44/255,1),(255/255, 102/255, 0, 1), (240/255, 81/255, 35/255,1), (231/255, 208/255, 30/255,1),(0, 68/255, 80/255,1)]
+color_dict = {i:colors[idx] for idx,i in enumerate(stor_kreds_parties)}
+
+with open("./data/parties.json","r") as infile:
+    parties = json.load(infile)
+with open("./data/xml_urls.json","r") as infile:
+    kredse = json.load(infile)
+with open("./data/stor_xml_urls.json","r") as infile:
+    storkredse = json.load(infile)
+start_time = time.time()  - zero_time
+
+while True: 
+    #### 
+    #### Valgkredse 
+    ####
+    results = {}
+    for kreds in kredse:
+        tmp_result, tmp_kreds, finished = get_results(kreds)
+        results[tmp_kreds] = tmp_result
+
+    #### 
+    #### Storkredse  
+    ####
+    stor_kreds_results = [0] * len(stor_kreds_parties)
+    for kreds in storkredse: 
+        tmp_result,tmp_kreds,finished = get_results(kreds)
+        if finished == "1":
+            tmp_votes = []
+            tmp_parties = []
+            for i in tmp_result:
+                if i in stor_kreds_parties:
+                    tmp_votes.append(tmp_result[i])
+                    tmp_parties.append(i)
+            vote_tally = district_vote_quotient(tmp_parties,tmp_votes,tmp_kreds)
+            for i in vote_tally:
+                stor_kreds_results[stor_kreds_parties.index(i)] += vote_tally[i]
+
+    tmp_total = sum(stor_kreds_results)
+    ikke_fordelt_idx = stor_kreds_parties.index("Ikke fordelt")
+    stor_kreds_results[ikke_fordelt_idx] = 135 - tmp_total 
+    #print(stor_kreds_results)
+    stor_kreds = {
+        'Parties': [parties[i]['Party'] if i != "Ikke fordelt" else "Ikke fordelt" for i in stor_kreds_parties],
+        'Votes': stor_kreds_results
+        }
+    # print(stor_kreds)
+    plt.figure(figsize=(20,10))
+    sns.set(rc = {'figure.figsize':(20,10),'axes.labelsize':18.0,'axes.titlesize': 36.0,'font.size': 25.0})
+    ax = sns.barplot(stor_kreds,y="Parties",x="Votes",errorbar=None,palette=colors,label=stor_kreds['Votes'])
+    
+    #ax = sns.catplot(stor_kreds,kind="bar",y="Parties",x="Votes",errorbar=None,label=stor_kreds['Votes'],palette=colors)
+    ax.set(title="Sikre mandater")
+    
+    ax.figure.savefig(f"./data/charts/chart.{number}.png", format="png")
+    ax.figure.savefig(f"./data/charts/chart.{number}.svg", format="svg")
+
+
+    
+
     aggregated = {}
     for district in results:
-        tmp = votes_district(results[district])
+        tmp = votes_district(results[district],parties)
         if (tmp[0],tmp[1],tmp[2]) == (0,0,0):
             aggregated[district] = {
             "Red": 0,
             "Blue": 0,
-            "Color": (128/255,128/255,128/255,1),
-        }
+            "Color": (128/255,128/255,128/255,1)
+            }
+
             continue 
         if tmp[0] > tmp[1]: 
             color = (1-(tmp[0]/tmp[2]),0,0,1)
@@ -79,13 +149,11 @@ while True:
         aggregated[district] = {
             "Red": tmp[0]/tmp[2],
             "Blue": tmp[1]/tmp[2],
-            "Color": color,
+            "Color": color
         }
 
 
 
-    with open("tmp.json","w") as outfile:
-        json.dump(aggregated,outfile,indent=4)
     results = {
         "opstilling": [],
         "Color": [],
@@ -97,10 +165,10 @@ while True:
 
 
 
-    with open("tmp.json","w") as outfile:
-        json.dump(results,outfile,indent=4)
     result_df = pd.DataFrame(results)
     result_df['opstilling'] -= 19
+
+
     geo = gpd.read_file("./test_data/geo/opstillingskreds.shp")
 
     geo['opstilling'] = geo['opstilling'].astype(int)
@@ -111,13 +179,10 @@ while True:
     geo_out['opstilling'] = geo['opstilling']
     geo_out['Color'] = geo['Color']
     geo_out.to_csv("tmp.csv")
-
-    #ax = geo.plot(column='Result',cmap=RdBu_4.mpl_colormap)
-    ax = geo.plot(color=geo['Color'],figsize=(19,10))
+    plt.figure(figsize=(8,12))
+    ax = geo.plot(color=geo['Color'],figsize=(10,15))
 
     ax.get_xaxis().set_visible(False)
-
-    #hide y-axis 
     ax.get_yaxis().set_visible(False)
 
     ax.spines['top'].set_visible(False)
@@ -125,10 +190,12 @@ while True:
     ax.spines['bottom'].set_visible(False)
     ax.spines['left'].set_visible(False)
     ax.margins(x=0)
-    ax.figure.savefig(f"map.{number}.png", format="png")
-    ax.figure.savefig(f"map.{number}.svg", format="svg")
-
+    ax.figure.savefig(f"./data/maps/map.{number}.png", format="png")
+    ax.figure.savefig(f"./data/maps/map.{number}.svg", format="svg")
+    
     number += 1 
-    end_time = time.time() - zero_time
-    print(time.time() - zero_time)
-    # time.sleep(120-(end_time-start_time))
+    sns.reset_defaults()
+    end_time = time.time() - zero_time    
+    time.sleep(119-(end_time-start_time))
+    start_time = time.time() - zero_time
+
