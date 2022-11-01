@@ -10,7 +10,7 @@ import os
 
 
 def get_results(url): 
-    request = requests.get(url)
+    request = requests.get(url,timeout=2)
     soup = Soup(request.content,features='lxml')
     parties = soup.findAll('parti')
     results = {}
@@ -52,7 +52,6 @@ def votes_district(results,parties):
         return red, blue, total 
 
 zero_time = time.time()
-number = 0 
 vote_allocation_dict = {
     "10": 15,
     "11": 11,
@@ -81,7 +80,7 @@ with open("./data/xml_urls.json","r") as infile:
 with open("./data/stor_xml_urls.json","r") as infile:
     storkredse = json.load(infile)
 start_time = time.time()  - zero_time
-
+diff_time = 0 
 while True: 
     #### 
     #### Valgkredse 
@@ -117,15 +116,15 @@ while True:
         'Votes': stor_kreds_results
         }
     # print(stor_kreds)
-    plt.figure(figsize=(20,10))
-    sns.set(rc = {'figure.figsize':(20,10),'axes.labelsize':18.0,'axes.titlesize': 36.0,'font.size': 25.0})
+    plt.figure(figsize=(1890/96,300/96),dpi=96)
+    sns.set(rc = {'figure.figsize':(1890/96,300/96),'axes.labelsize':18.0,'axes.titlesize': 25.0,'font.size': 25.0})
     ax = sns.barplot(stor_kreds,y="Parties",x="Votes",errorbar=None,palette=colors,label=stor_kreds['Votes'])
     
     #ax = sns.catplot(stor_kreds,kind="bar",y="Parties",x="Votes",errorbar=None,label=stor_kreds['Votes'],palette=colors)
     ax.set(title="Sikre mandater")
     
     # ax.figure.savefig(f"./data/charts/chart.{number}.png", format="png")
-    ax.figure.savefig(f"./data/charts/chart.{number}.svg", format="svg")
+    ax.figure.savefig(f"./data/charts/chart.0.svg", format="svg")
 
 
     
@@ -174,14 +173,9 @@ while True:
 
     geo['opstilling'] = geo['opstilling'].astype(int)
     geo = pd.merge(geo,result_df,left_on="opstilling",right_on='opstilling')
-
-
-    geo_out = pd.DataFrame()
-    geo_out['opstilling'] = geo['opstilling']
-    geo_out['Color'] = geo['Color']
-    geo_out.to_csv("tmp.csv")
-    plt.figure(figsize=(8,12))
-    ax = geo.plot(color=geo['Color'],figsize=(10,15))
+    plt.close()
+    plt.figure(figsize=(480/96,720/96),dpi=96)
+    ax = geo.plot(color=geo['Color'],figsize=(480/96,720/96))
 
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
@@ -192,15 +186,11 @@ while True:
     ax.spines['left'].set_visible(False)
     ax.margins(x=0)
     # ax.figure.savefig(f"./data/maps/map.{number}.png", format="png")
-    ax.figure.savefig(f"./data/maps/map.{number}.svg", format="svg")
-    if os.path.isfile(f"./data/charts/chart.{number-3}.svg"):
-        os.remove(f"./data/charts/chart.{number-3}.svg")
-    if os.path.isfile(f"./data/maps/map.{number-3}.svg"):
-        os.remove(f"./data/maps/map.{number-3}.svg")
-    number += 1 
+    ax.figure.savefig(f"./data/maps/map.0.svg", format="svg")
+    plt.close()
     sns.reset_defaults()
     end_time = time.time() - zero_time    
-    time.sleep(119-(end_time-start_time))
+    #time.sleep(119-(end_time-start_time))
     start_time = time.time() - zero_time 
     
     
