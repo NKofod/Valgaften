@@ -24,38 +24,5 @@ for kreds in kredse:
 with open("./test_data/resultater.json", "w") as outfile:
     json.dump(results,outfile,indent=4)
 
-with open("./test_data/parties.json","r") as infile:
-    parties = json.load(infile)
-
-with open("./test_data/resultater.json", "r") as infile: 
-    results = json.load(infile)
-
-def rgb_to_hex(rgb):
-    return '%02x%02x%02x' % rgb
-
-
-def votes_district(results):
-    red = 0 
-    blue = 0
-    for i in results:
-        if i == "":
-            continue 
-        if parties[i] == "Red":
-            red += int(results[i])
-        else:
-            blue += int(results[i])
-    total = red + blue 
-    return red, blue, total 
-
-aggregated = {}
-for district in results:
-    tmp = votes_district(results[district])
-    aggregated[district] = {
-        "Red": tmp[0]/tmp[2],
-        "Blue": tmp[1]/tmp[2],
-        "Color": (255*tmp[0]/tmp[2],0,255*tmp[1]/tmp[2]),
-        "Hex_color": rgb_to_hex((int(255*tmp[0]/tmp[2]),0,int(255*tmp[1]/tmp[2])))
-    }
-
 
 

@@ -1,0 +1,17 @@
+<html>
+<script>
+var count = 0; 
+window.onload = function() {
+    var image = document.getElementById("img");
+
+    function updateImage() {
+        count++;
+        image.src = image.src.split(".")[0] + "." + count + ".png";
+    }
+    setInterval(updateImage, 1000);
+};
+</script>
+
+<img id="img" src="./map.0.svg" style="position:absolute;top:-50;left:-550"/>
+</body>
+</html>
