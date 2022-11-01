@@ -124,7 +124,7 @@ while True:
     ax.set(title="Sikre mandater")
     
     # ax.figure.savefig(f"./data/charts/chart.{number}.png", format="png")
-    ax.figure.savefig(f"./data/charts/chart.0.svg", format="svg")
+    ax.figure.savefig(f"./data/charts/chart.0.svg", format="svg",bbox_inches="tight")
 
 
     
@@ -186,7 +186,7 @@ while True:
     ax.spines['left'].set_visible(False)
     ax.margins(x=0)
     # ax.figure.savefig(f"./data/maps/map.{number}.png", format="png")
-    ax.figure.savefig(f"./data/maps/map.0.svg", format="svg")
+    ax.figure.savefig(f"./data/maps/map.0.svg", format="svg",bbox_inches="tight")
     plt.close()
     sns.reset_defaults()
     end_time = time.time() - zero_time    
