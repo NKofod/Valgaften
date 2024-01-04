@@ -11,6 +11,7 @@ def get_results(url):
     parties = soup.findAll('parti')
     results = {}
     kreds = soup.find("sted")['id']
+    print(kreds)
     for parti in parties: 
         results[parti['id']] = parti['stemmerantal']
     return results,kreds 
@@ -23,6 +24,7 @@ for kreds in kredse:
     results[tmp_kreds] = tmp_result
 with open("./test_data/resultater.json", "w") as outfile:
     json.dump(results,outfile,indent=4)
+
 
 
 
